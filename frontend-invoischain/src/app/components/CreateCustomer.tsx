@@ -2,23 +2,28 @@
 /* eslint-disable @next/next/no-img-element */
 
 'use client'
-import React, {useState}  from 'react'
+import React, { useState } from 'react'
 import { config } from "./../../../next.config.mjs"
 import { useReadContract, useAccount, useWriteContract, useConnect } from 'wagmi';
 import { Contract_ABI } from "../contract/contractAbi";
-import { arbitrumSepolia } from 'viem/chains';
+import { arbitrumSepolia, liskSepolia } from 'viem/chains';
 import { injected } from 'wagmi/connectors';
 
-const contactAddress = '0x960B28170745254fD5F27379B3C58D2D704355DC';
+const contactAddress = '0x7066989818c88cD1e533d22519c381c6e21Ed487';
 export default function CreateCustomer({ setIsActive }: { setIsActive: (isActive: string) => void }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [organization, setOrganization] = useState("");
   const [phone, setPhone] = useState("");
   const [wallet, setWallet] = useState("");
+  const { address, isConnected } = useAccount();
+  const { connectAsync } = useConnect();
   const { writeContractAsync } = useWriteContract();
   const createCustomerFunction = async () => {
     try {
+      if (address) {
+        await connectAsync({chainId: liskSepolia.id, connector:injected()})
+      }
         const result = writeContractAsync({
           address: contactAddress,
           abi: Contract_ABI,
@@ -136,7 +141,7 @@ export default function CreateCustomer({ setIsActive }: { setIsActive: (isActive
                 </div>
                   <button 
                  type='button'
-                  className={`bg-green w-full px-4 py-2 rounded-md text-white'}`}
+                  className="bg-green w-full px-4 py-2 rounded-md text-white"
                   onClick={() => {
                     console.log("createCustomerFunction")
                     createCustomerFunction();

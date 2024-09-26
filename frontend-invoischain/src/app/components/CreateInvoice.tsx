@@ -5,12 +5,12 @@ import React, {useState, useEffect}  from 'react'
 import { nanoid } from 'nanoid';
 import { useReadContract, useAccount, useWriteContract, useConnect } from 'wagmi';
 import {Contract_ABI } from "../contract/contractAbi";
-import { arbitrumSepolia, lisk } from 'viem/chains';
+import { liskSepolia, lisk } from 'viem/chains';
 import { injected } from 'wagmi/connectors';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-const contactAddress = '0x960B28170745254fD5F27379B3C58D2D704355DC';
+const contactAddress = '0x7066989818c88cD1e533d22519c381c6e21Ed487';
 export default function CreateInvoice() {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
@@ -35,14 +35,14 @@ export default function CreateInvoice() {
   const { writeContract, writeContractAsync } = useWriteContract();
   const createInvoiceFunction = async () => {
     try {
-      // if (address) {
-      //   await connectAsync({chainId: arbitrumSepolia.id , connector:injected()})
-      // }
+      if (address) {
+        await connectAsync({chainId:liskSepolia.id, connector:injected()})
+      }
       const result =  writeContractAsync({
         address: contactAddress,
         abi: Contract_ABI,
         functionName: 'createInvoice',
-        args: ['0xB5ADB29C608CFbfA5D6BB216cCC80eCBd76A45F1', goods, Number(qty) * Number(price), '0xbacef2640862B42eECcFeAb9Bf750476aE7decc6'],
+        args: ['0xB5ADB29C608CFbfA5D6BB216cCC80eCBd76A45F1', goods, Number(qty) * Number(price), '0x8a21CF9Ba08Ae709D64Cb25AfAA951183EC9FF6D'],
       });
       console.log('New invoice created:', result);
     } catch (error) {
@@ -157,8 +157,8 @@ useEffect(() => {
                         autoComplete="payment-method"
                         className="block w-full bg-[#F0F2F5] rounded-md border-0 p-[8.1px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e) => setPayMeth(e.target.value)} value={payMeth}
                       >
-                        <option>Arbitrium</option>
-                        <option>Core</option>
+                        <option>LiskSepolia</option>
+                        <option>Lisk</option>
                         <option>Base</option>
                       </select>
                     </div>
@@ -174,10 +174,10 @@ useEffect(() => {
                         autoComplete="recieve-payment-in"
                         className="block w-full bg-[#F0F2F5] rounded-md border-0 p-[8.1px] text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" onChange={(e) => setPayType(e.target.value)} value={payType}
                       >
-                        <option>Arbitrium</option>
-                        <option>USDT</option>
-                        <option>USDC</option>
+                        <option>LSK</option>
                         <option>ETH</option>
+                        <option>USDC</option>
+                        <option>USD</option>
                       </select>
                     </div>
                   </div>
