@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* change background color of the website */
+body {
+  background: #f0f0f0;
+}
+.jumbo-bg {
+  height: 130vh;
+  min-width: 100vw;
+  background-image: url('../../../public/invois-hero.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+}
+
+input, select {
+  background-color: transparent;
+  outline-color: green;
+  outline-width: 1px;
+}
+
+.solana-bg {
+  background-image: url('../../../public/invois-curves.png');
+  background-repeat: no-repeat;
+  background-color: #1E2A39;
+  background-size: cover;
+  background-position: right;
+}
+
