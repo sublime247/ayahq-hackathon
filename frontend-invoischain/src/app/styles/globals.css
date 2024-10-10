@@ -24,7 +24,7 @@ input, select {
 .solana-bg {
   background-image: url('../../../public/invois-curves.png');
   background-repeat: no-repeat;
-  background-color: #1E2A39;
+  background-color: #007FFF;
   background-size: cover;
   background-position: right;
 }
